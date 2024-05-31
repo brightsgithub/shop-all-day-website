@@ -26,7 +26,7 @@ function App() {
     // useEffect() hooks tells react to run some code under certain conditions
     // 1. useEffect(() => {})       // Runs after every re-render
     // 1. useEffect(() => {}, [])   // Runs only on mount
-    // 1. useEffect(() => {},[dep1, dep2, dep3, etc])       // Runs on mount + when dependency value changes
+    // 1. useEffect(() => {},[dep1, dep2, dep3, etc])       // Runs on mount + when dependency value changes.
 
     useEffect(() => {
         async function fetchCategories() {
