@@ -15,6 +15,7 @@ function App() {
     const [categories, setCategories] = useState([]);
 
     const [productStocks, setProductStocks] = useState([]);
+    const [brandsByProductTypeMap, setBrandsByProductTypeMap] = useState(new Map());
 
     const [loadingCategories, setLoadingCategories] = useState(true);
     const [loadingProductStocks, setLoadingProductStocks] = useState(true);
@@ -52,9 +53,12 @@ function App() {
             setLoadingProductStocks(true);
             try {
                 const data = await productStockService.getProductStocksByCategory(categoryId);
-                const groupBrandsByProductTypeMap = groupBrandsByProductType(data);
-                const uniqueList = removeProductTypeDuplicates(data)
-                setProductStocks(uniqueList);
+
+                const brandsByProductTypeMap = groupBrandsByProductType(data)
+                setBrandsByProductTypeMap(brandsByProductTypeMap);
+
+                const productTypes = removeProductTypeDuplicates(data)
+                setProductStocks(productTypes);
             } catch (error) {
                 setProductStockError(error.message);
             } finally {
@@ -140,6 +144,7 @@ function App() {
             <div className="container">
                 <div className="container_child_2">
                     <LeftMenu
+                        brandsByProductTypeMap={brandsByProductTypeMap}
                         productStocks={productStocks}
                         loading={loadingProductStocks}
                         error={productStockError}
