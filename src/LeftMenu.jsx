@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 
-function LeftMenu({ productTypes, loading, error }) { // Add selectedCategoryId prop
+function LeftMenu({ productStocks, loading, error }) { // Add selectedCategoryId prop
 
     return (
         <div className="left-menu">
             <ul>
-                {productTypes.map(productType => (
+                {productStocks.map(productStock => (
 
-                    <li className="left-menu-titles" key={productType.productTypeId}>{productType.productTypeName}
+                    <li className="left-menu-titles" key={productStock.productDto.productTypeDto.productTypeId}>{productStock.productDto.productTypeDto.productTypeName}
                         <div className="submenu-brand-name">
                             <label htmlFor="agree">Brand 1</label>
                             <input type="checkbox" id="agree" name="agree"/>
