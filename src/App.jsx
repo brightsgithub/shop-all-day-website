@@ -17,6 +17,10 @@ function App() {
     const [productStocks, setProductStocks] = useState([]);
     const [brandsByProductTypeMap, setBrandsByProductTypeMap] = useState(new Map());
 
+    const [productsByProductTypeMap, setProductsByProductTypeMap] = useState(new Map());
+    const [productStocksForMainDisplay, setProductStocksForMainDisplay] = useState(new Map());
+    const [selectedProductTypeId, setSelectedProductTypeId] = useState(null);
+
     const [loadingCategories, setLoadingCategories] = useState(true);
     const [loadingProductStocks, setLoadingProductStocks] = useState(true);
 
@@ -54,6 +58,21 @@ function App() {
             try {
                 const data = await productStockService.getProductStocksByCategory(categoryId);
 
+                const groupProductsByProductTypeMap = groupProductsByProductType(data);
+
+                var productStocks = null;
+                if (selectedProductTypeId == null) {
+                    console.log(data[0].productDto.productTypeDto)
+                    productStocks = groupProductsByProductTypeMap.get(data[0].productDto.productTypeDto.productTypeId);
+                } else {
+                    productStocks = groupProductsByProductTypeMap.get(selectedProductTypeId);
+                }
+                console.log("productStocks "+ productStocks)
+                // console.log(groupProductsByProductTypeMap.get(99))
+                // console.log("end")
+                setProductsByProductTypeMap(groupProductsByProductTypeMap);
+                setProductStocksForMainDisplay(productStocks);
+
                 const brandsByProductTypeMap = groupBrandsByProductType(data)
                 setBrandsByProductTypeMap(brandsByProductTypeMap);
 
@@ -66,7 +85,7 @@ function App() {
             }
         }
         fetchProductStocks(selectedCategoryId);
-    },[selectedCategoryId]); // when the state variable selectedCategoryId changes, call fetchProductStocks(id)
+    },[selectedCategoryId, selectedProductTypeId]); // when the state variable selectedCategoryId changes, call fetchProductStocks(id)
 
     function groupBrandsByProductType(data) {
         var groupBrandsByProductTypeMap = new Map();
@@ -109,6 +128,40 @@ function App() {
     }
 
     /**
+     * Gets the first products of each product type, where the key is the product type.
+     * Essentially we have a key of product type with a list of unique products for that product type, picking the
+     * first for each for display on the center page. This is so we can show at least one of each product and its price.
+     * @param data
+     * @returns {Map<any, any>}
+     */
+    function groupProductsByProductType(data) {
+        var groupProductsByProductTypeMap = new Map();
+        var productStocks = [];
+        var previousProductId = null
+        var previousProductTypeId = null
+        for (let i = 0; i < data.length; i++) {
+            const productStock = data[i];
+            const product = productStock.productDto;
+            const productType = productStock.productDto.productTypeDto;
+
+            if (previousProductTypeId !== productType.productTypeId) {
+                previousProductTypeId = productType.productTypeId;
+                // create new entry in map with new list
+                productStocks = [];
+                groupProductsByProductTypeMap.set(productType.productTypeId, productStocks);
+            }
+
+            if (product.productId !== previousProductId) {
+                previousProductId = product.productId;
+                productStocks.push(productStock);
+            }
+        }
+        console.log(groupProductsByProductTypeMap);
+
+        return groupProductsByProductTypeMap;
+    }
+
+    /**
      * This function iterates over the original array (arr).
      * It uses a Set called uniqueIds to keep track of productTypeIds that have already been encountered.
      * The filter method returns only the first occurrence of each unique productTypeId, effectively removing duplicates.
@@ -148,6 +201,7 @@ function App() {
                         productStocks={productStocks}
                         loading={loadingProductStocks}
                         error={productStockError}
+                        setSelectedProductTypeId={setSelectedProductTypeId}
                     />
                     <div className="main-content-container">
                         <CategoryTopMenu
@@ -155,7 +209,9 @@ function App() {
                             selectedCategoryId={selectedCategoryId}
                             setSelectedCategoryId={setSelectedCategoryId}
                         />
-                        <MainContent/>
+                        <MainContent
+                            productStocksForMainDisplay={productStocksForMainDisplay}
+                        />
                     </div>
                 </div>
             </div>

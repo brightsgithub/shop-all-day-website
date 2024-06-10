@@ -1,6 +1,6 @@
 import React from 'react';
 
-function LeftMenu({ brandsByProductTypeMap, productStocks, loading, error }) {
+function LeftMenu({ setSelectedProductTypeId, brandsByProductTypeMap, productStocks, loading, error }) {
 
     return (
         <div className="left-menu">
@@ -11,7 +11,7 @@ function LeftMenu({ brandsByProductTypeMap, productStocks, loading, error }) {
                     const brands = brandsByProductTypeMap.get(productTypeId) || []; // Retrieve brands for the current product type
 
                     return (
-                        <li className="left-menu-titles" key={productTypeId}>
+                        <li className="left-menu-titles" key={productTypeId} onClick={() => setSelectedProductTypeId(productTypeId)}>
                             {productTypeName}
                             <div className="submenu-brand-name">
                                 <label htmlFor={`agree-${productTypeId}`}>
