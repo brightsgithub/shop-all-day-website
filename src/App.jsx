@@ -52,7 +52,7 @@ function App() {
     }, []);
 
     useEffect( () => {
-        async function fetchProductStocks(categoryId) {
+        async function fetchProductStocks(categoryId, productTypeId) {
             if (categoryId === null) return;
             setLoadingProductStocks(true);
             try {
@@ -61,15 +61,17 @@ function App() {
                 const groupProductsByProductTypeMap = groupProductsByProductType(data);
 
                 var productStocks = null;
-                if (selectedProductTypeId == null) {
-                    console.log(data[0].productDto.productTypeDto)
+                if (productTypeId == null) {
+                    console.log("using initial value for product stocks");
                     productStocks = groupProductsByProductTypeMap.get(data[0].productDto.productTypeDto.productTypeId);
                 } else {
-                    productStocks = groupProductsByProductTypeMap.get(selectedProductTypeId);
+                    console.log("using selected value for product stocks");
+                    productStocks = groupProductsByProductTypeMap.get(productTypeId);
                 }
-                console.log("productStocks "+ productStocks)
-                // console.log(groupProductsByProductTypeMap.get(99))
-                // console.log("end")
+
+                console.log("printing product stocks for main view");
+                console.log(productStocks);
+                console.log("printing product stocks for main view END");
                 setProductsByProductTypeMap(groupProductsByProductTypeMap);
                 setProductStocksForMainDisplay(productStocks);
 
@@ -84,7 +86,7 @@ function App() {
                 setLoadingProductStocks(false);
             }
         }
-        fetchProductStocks(selectedCategoryId);
+        fetchProductStocks(selectedCategoryId, selectedProductTypeId);
     },[selectedCategoryId, selectedProductTypeId]); // when the state variable selectedCategoryId changes, call fetchProductStocks(id)
 
     function groupBrandsByProductType(data) {
@@ -121,8 +123,9 @@ function App() {
         }
 
         console.log(" ");
-        console.log("Final map result ");
+        console.log("Final map result of unique brands for a product type");
         console.log(groupBrandsByProductTypeMap);
+        console.log("Final map result of unique brands for a product type END");
 
         return groupBrandsByProductTypeMap;
     }
@@ -156,7 +159,9 @@ function App() {
                 productStocks.push(productStock);
             }
         }
+        console.log("Map of first products of each product type");
         console.log(groupProductsByProductTypeMap);
+        console.log("Map of first products of each product type END");
 
         return groupProductsByProductTypeMap;
     }
@@ -208,6 +213,7 @@ function App() {
                             categories={categories}
                             selectedCategoryId={selectedCategoryId}
                             setSelectedCategoryId={setSelectedCategoryId}
+                            setSelectedProductTypeId={setSelectedProductTypeId}
                         />
                         <MainContent
                             productStocksForMainDisplay={productStocksForMainDisplay}
