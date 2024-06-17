@@ -19,6 +19,8 @@ function App() {
 
     const [productsByProductTypeMap, setProductsByProductTypeMap] = useState(new Map());
     const [productStocksForMainDisplay, setProductStocksForMainDisplay] = useState(new Map());
+    const [filteredProductStocksForMainDisplay, setFilteredProductStocksForMainDisplay] = useState([]);
+    const [selectedBrandsFilter, setSelectedBrandsFilter] = useState(new Map());
     const [selectedProductTypeId, setSelectedProductTypeId] = useState(null);
 
     const [loadingCategories, setLoadingCategories] = useState(true);
@@ -52,21 +54,27 @@ function App() {
     }, []);
 
     useEffect( () => {
-        async function fetchProductStocks(categoryId, productTypeId) {
+        async function fetchProductStocks(categoryId) {
             if (categoryId === null) return;
             setLoadingProductStocks(true);
+
+            console.log("first check >>   selectedBrandsFilter");
+            console.log(selectedBrandsFilter);
+            console.log(categoryId);
+            console.log(selectedProductTypeId);
+
             try {
                 const data = await productStockService.getProductStocksByCategory(categoryId);
 
                 const groupProductsByProductTypeMap = groupProductsByProductType(data);
 
                 var productStocks = null;
-                if (productTypeId == null) {
+                if (selectedProductTypeId == null) {
                     console.log("using initial value for product stocks");
                     productStocks = groupProductsByProductTypeMap.get(data[0].productDto.productTypeDto.productTypeId);
                 } else {
                     console.log("using selected value for product stocks");
-                    productStocks = groupProductsByProductTypeMap.get(productTypeId);
+                    productStocks = groupProductsByProductTypeMap.get(selectedProductTypeId);
                 }
 
                 console.log("printing product stocks for main view");
@@ -74,20 +82,46 @@ function App() {
                 console.log("printing product stocks for main view END");
                 setProductsByProductTypeMap(groupProductsByProductTypeMap);
                 setProductStocksForMainDisplay(productStocks);
+                setFilteredProductStocksForMainDisplay(populateFilteredProductStocks(productStocks, selectedBrandsFilter))
 
                 const brandsByProductTypeMap = groupBrandsByProductType(data)
                 setBrandsByProductTypeMap(brandsByProductTypeMap);
 
                 const productTypes = removeProductTypeDuplicates(data)
                 setProductStocks(productTypes);
+
             } catch (error) {
                 setProductStockError(error.message);
             } finally {
                 setLoadingProductStocks(false);
             }
         }
-        fetchProductStocks(selectedCategoryId, selectedProductTypeId);
-    },[selectedCategoryId, selectedProductTypeId]); // when the state variable selectedCategoryId changes, call fetchProductStocks(id)
+        fetchProductStocks(selectedCategoryId);
+    },[selectedCategoryId, selectedProductTypeId, selectedBrandsFilter]); // when the state variable selectedCategoryId changes, call fetchProductStocks(id)
+
+
+
+    function populateFilteredProductStocks(productStocksForMainDisplay, userSelectedBrandsFilter) {
+        const newFilteredProductStocks = [];
+        console.log("populateFilteredProductStocks start");
+        console.log(userSelectedBrandsFilter);
+        if (userSelectedBrandsFilter === undefined || userSelectedBrandsFilter === null || userSelectedBrandsFilter.size === 0) {
+            for (let i = 0; i < productStocksForMainDisplay.length; i++) {
+                const productStock = productStocksForMainDisplay[i];
+                newFilteredProductStocks.push(productStock);
+            }
+            return newFilteredProductStocks;
+        }
+
+        for (let i = 0; i < productStocksForMainDisplay.length; i++) {
+            const productStock = productStocksForMainDisplay[i];
+            const brandId = productStock.productDto.brandDto.brandId;
+            if (userSelectedBrandsFilter.get(brandId) != null) {
+                newFilteredProductStocks.push(productStock);
+            }
+        }
+        return newFilteredProductStocks;
+    }
 
     function groupBrandsByProductType(data) {
         var groupBrandsByProductTypeMap = new Map();
@@ -197,6 +231,29 @@ function App() {
         });
     };
 
+    const handleBrandClick = (brandId, event) => {
+        // This will stop the event from bubbling up to parent elements
+        // this is because the parent <li> has a child of brand <li> and clicking the
+        // child will call the parent onclick. to prevent the parent from being called,
+        // we stopPropagation
+        event.stopPropagation();
+        if (brandId === null) {
+            console.log("handleBrandClick CLEAR1!!!!!!");
+            setSelectedBrandsFilter(new Map());
+            return;
+        }
+
+        if (event.target.checked === true) {
+            selectedBrandsFilter.set(brandId, brandId);
+        } else {
+            selectedBrandsFilter.delete(brandId);
+        }
+        console.log(selectedBrandsFilter);
+        setSelectedBrandsFilter(new Map(selectedBrandsFilter));
+        console.log("handleBrandClick end!");
+
+    };
+
     return (
         <>
             <div className="container">
@@ -207,6 +264,7 @@ function App() {
                         loading={loadingProductStocks}
                         error={productStockError}
                         setSelectedProductTypeId={setSelectedProductTypeId}
+                        handleBrandClick={handleBrandClick}
                     />
                     <div className="main-content-container">
                         <CategoryTopMenu
@@ -216,7 +274,7 @@ function App() {
                             setSelectedProductTypeId={setSelectedProductTypeId}
                         />
                         <MainContent
-                            productStocksForMainDisplay={productStocksForMainDisplay}
+                            productStocksForMainDisplay={filteredProductStocksForMainDisplay}
                         />
                     </div>
                 </div>

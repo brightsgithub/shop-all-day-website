@@ -1,6 +1,13 @@
 import React from 'react';
 
-function LeftMenu({ setSelectedProductTypeId, brandsByProductTypeMap, productStocks, loading, error }) {
+function LeftMenu({
+                      setSelectedProductTypeId,
+                      brandsByProductTypeMap,
+                      productStocks,
+                      loading,
+                      error,
+                      handleBrandClick
+}) {
 
     return (
         <div className="left-menu">
@@ -11,7 +18,13 @@ function LeftMenu({ setSelectedProductTypeId, brandsByProductTypeMap, productSto
                     const brands = brandsByProductTypeMap.get(productTypeId) || []; // Retrieve brands for the current product type
 
                     return (
-                        <li className="left-menu-titles" key={productTypeId} onClick={() => setSelectedProductTypeId(productTypeId)}>
+                        <li className="left-menu-titles"
+                            key={productTypeId}
+                            onClick={(event) => {
+                                handleBrandClick(null, event);
+                                setSelectedProductTypeId(productTypeId);
+                            }
+                        }>
                             {productTypeName}
                             <div className="submenu-brand-name">
                                 <label htmlFor={`agree-${productTypeId}`}>
@@ -19,13 +32,15 @@ function LeftMenu({ setSelectedProductTypeId, brandsByProductTypeMap, productSto
                                         {brands.map((brand) => (
                                             <li key={brand.brandId}>
                                                 <span>{brand.brandName}</span>
-                                                <input type="checkbox" id={brand.brandId}
-                                                       name={brand.brandId} />
+                                                <input type="checkbox"
+                                                       id={brand.brandId}
+                                                       onClick={(event) => handleBrandClick(brand.brandId, event)}
+                                                       name={brand.brandId}
+                                                />
                                             </li>
                                         ))}
                                     </ul>
                                 </label>
-
                             </div>
                         </li>
                     );

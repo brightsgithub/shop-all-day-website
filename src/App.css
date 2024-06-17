@@ -17,6 +17,10 @@
   border: 1px solid black;
 }
 
+.main-content p{
+  color: #fff;
+}
+
 .left-menu-titles{
   cursor: pointer;
 }
