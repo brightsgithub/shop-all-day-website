@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 
-function CategoryTopMenu({categories, selectedCategoryId, setSelectedCategoryId, setSelectedProductTypeId}) {
+function CategoryTopMenu({categories, selectedCategoryId, setSelectedCategoryId, setSelectedProductTypeId, handleOnCategoryClick}) {
     return (
         <nav>
             <ul>
                 {categories.map(category => (
                     <li key={category.categoryId} onClick={
-                        () => {
-                            setSelectedCategoryId(category.categoryId);
-                            setSelectedProductTypeId(null); // reset the previous ProductTypeId
-                        }
+                        () => {handleOnCategoryClick(category.categoryId)}
                     }>
                         {category.categoryName}
                     </li>

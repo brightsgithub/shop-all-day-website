@@ -6,13 +6,15 @@ function LeftMenu({
                       productStocks,
                       loading,
                       error,
-                      handleBrandClick
+                      handleBrandClick,
+                      checkboxRefs
 }) {
-
+    var brandsCount = 0;
     return (
         <div className="left-menu">
             <ul>
-                {productStocks.map((productStock) => {
+                {
+                    productStocks.map((productStock) => {
                     const productTypeId = productStock.productDto.productTypeDto.productTypeId;
                     const productTypeName = productStock.productDto.productTypeDto.productTypeName;
                     const brands = brandsByProductTypeMap.get(productTypeId) || []; // Retrieve brands for the current product type
@@ -21,7 +23,7 @@ function LeftMenu({
                         <li className="left-menu-titles"
                             key={productTypeId}
                             onClick={(event) => {
-                                handleBrandClick(null, event);
+                                handleBrandClick(null, event, productTypeId);
                                 setSelectedProductTypeId(productTypeId);
                             }
                         }>
@@ -34,8 +36,9 @@ function LeftMenu({
                                                 <span>{brand.brandName}</span>
                                                 <input type="checkbox"
                                                        id={brand.brandId}
-                                                       onClick={(event) => handleBrandClick(brand.brandId, event)}
+                                                       onClick={(event) => handleBrandClick(brand.brandId, event, productTypeId)}
                                                        name={brand.brandId}
+                                                       ref={(el) => (checkboxRefs.current[brandsCount++] = el)}
                                                 />
                                             </li>
                                         ))}

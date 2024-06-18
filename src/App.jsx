@@ -1,6 +1,6 @@
 import './App.css'
 import './Header.jsx'
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import categoryService from './services/categoryService.js';
 import productStockService from './services/productStockService.js';
 import LeftMenu from "./LeftMenu.jsx";
@@ -231,12 +231,39 @@ function App() {
         });
     };
 
-    const handleBrandClick = (brandId, event) => {
+
+    const checkboxRefs = useRef([]);
+    const handleResetAll = () => {
+        console.log("checkboxRefs.length");
+        console.log(checkboxRefs.current.length)
+        checkboxRefs.current.forEach((checkbox) => {
+            if(checkbox !== null) {
+                checkbox.checked = false;
+            }
+        });
+    }
+
+    const handleBrandClick = (brandId, event, productTypeId) => {
         // This will stop the event from bubbling up to parent elements
         // this is because the parent <li> has a child of brand <li> and clicking the
         // child will call the parent onclick. to prevent the parent from being called,
         // we stopPropagation
         event.stopPropagation();
+        console.log("handleBrandClick");
+        console.log("selectedProductTypeId "+ selectedProductTypeId);
+        console.log("productTypeId "+ productTypeId);
+
+        if (productTypeId !== selectedProductTypeId) {
+            console.log("NEW productType");
+            //event.target.checked = false
+            handleResetAll();
+            selectedBrandsFilter.clear();
+            setSelectedBrandsFilter(selectedBrandsFilter);
+            console.log(selectedBrandsFilter);
+            setSelectedProductTypeId(productTypeId);
+        }
+
+
         if (brandId === null) {
             console.log("handleBrandClick CLEAR1!!!!!!");
             setSelectedBrandsFilter(new Map());
@@ -254,6 +281,14 @@ function App() {
 
     };
 
+    const handleOnCategoryClick = (categoryId) => {
+        setSelectedCategoryId(categoryId);
+        setSelectedProductTypeId(null); // reset the previous ProductTypeId
+        handleResetAll();
+        selectedBrandsFilter.clear();
+        setSelectedBrandsFilter(selectedBrandsFilter);
+    }
+
     return (
         <>
             <div className="container">
@@ -265,6 +300,7 @@ function App() {
                         error={productStockError}
                         setSelectedProductTypeId={setSelectedProductTypeId}
                         handleBrandClick={handleBrandClick}
+                        checkboxRefs={checkboxRefs}
                     />
                     <div className="main-content-container">
                         <CategoryTopMenu
@@ -272,6 +308,7 @@ function App() {
                             selectedCategoryId={selectedCategoryId}
                             setSelectedCategoryId={setSelectedCategoryId}
                             setSelectedProductTypeId={setSelectedProductTypeId}
+                            handleOnCategoryClick={handleOnCategoryClick}
                         />
                         <MainContent
                             productStocksForMainDisplay={filteredProductStocksForMainDisplay}
