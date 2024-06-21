@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-function CategoryTopMenu({categories, selectedCategoryId, setSelectedCategoryId, setSelectedProductTypeId, handleOnCategoryClick}) {
+function CategoryTopMenu({categories, handleOnCategoryClick}) {
     return (
         <nav>
             <ul>
                 {categories.map(category => (
-                    <li key={category.categoryId} onClick={
+                    <li className="top-menu-titles" key={category.categoryId} onClick={
                         () => {handleOnCategoryClick(category.categoryId)}
                     }>
                         {category.categoryName}

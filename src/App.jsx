@@ -29,6 +29,8 @@ function App() {
     const [categoryError, setCategoryError] = useState(null);
     const [productStockError, setProductStockError] = useState(null);
 
+    const checkboxRefs = useRef([]); // keep a reference on all checkBoxes
+
 
     // useEffect() hooks tells react to run some code under certain conditions
     // 1. useEffect(() => {})       // Runs after every re-render
@@ -58,10 +60,10 @@ function App() {
             if (categoryId === null) return;
             setLoadingProductStocks(true);
 
-            console.log("first check >>   selectedBrandsFilter");
-            console.log(selectedBrandsFilter);
-            console.log(categoryId);
-            console.log(selectedProductTypeId);
+            log("first check >>   selectedBrandsFilter");
+            log(selectedBrandsFilter);
+            log(categoryId);
+            log(selectedProductTypeId);
 
             try {
                 const data = await productStockService.getProductStocksByCategory(categoryId);
@@ -70,16 +72,16 @@ function App() {
 
                 var productStocks = null;
                 if (selectedProductTypeId == null) {
-                    console.log("using initial value for product stocks");
+                    log("using initial value for product stocks");
                     productStocks = groupProductsByProductTypeMap.get(data[0].productDto.productTypeDto.productTypeId);
                 } else {
-                    console.log("using selected value for product stocks");
+                    log("using selected value for product stocks");
                     productStocks = groupProductsByProductTypeMap.get(selectedProductTypeId);
                 }
 
-                console.log("printing product stocks for main view");
-                console.log(productStocks);
-                console.log("printing product stocks for main view END");
+                log("printing product stocks for main view");
+                log(productStocks);
+                log("printing product stocks for main view END");
                 setProductsByProductTypeMap(groupProductsByProductTypeMap);
                 setProductStocksForMainDisplay(productStocks);
                 setFilteredProductStocksForMainDisplay(populateFilteredProductStocks(productStocks, selectedBrandsFilter))
@@ -103,8 +105,8 @@ function App() {
 
     function populateFilteredProductStocks(productStocksForMainDisplay, userSelectedBrandsFilter) {
         const newFilteredProductStocks = [];
-        console.log("populateFilteredProductStocks start");
-        console.log(userSelectedBrandsFilter);
+        log("populateFilteredProductStocks start");
+        log(userSelectedBrandsFilter);
         if (userSelectedBrandsFilter === undefined || userSelectedBrandsFilter === null || userSelectedBrandsFilter.size === 0) {
             for (let i = 0; i < productStocksForMainDisplay.length; i++) {
                 const productStock = productStocksForMainDisplay[i];
@@ -147,19 +149,19 @@ function App() {
                 const uniqueBrands = removeBrandDuplicates(brandsForProductId);
                 groupBrandsByProductTypeMap.set(productStock.productDto.productTypeDto.productTypeId, uniqueBrands);
                 brandsForProductId = [];
-                console.log(">>>>>>>>>>>Made unique Brands List for "+ productStock.productDto.productTypeDto.productTypeName);
+                log(">>>>>>>>>>>Made unique Brands List for "+ productStock.productDto.productTypeDto.productTypeName);
                 uniqueBrands.forEach(element => {
-                    console.log(element);
+                    log(element);
                 });
-                console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+                log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 
             }
         }
 
-        console.log(" ");
-        console.log("Final map result of unique brands for a product type");
-        console.log(groupBrandsByProductTypeMap);
-        console.log("Final map result of unique brands for a product type END");
+        log(" ");
+        log("Final map result of unique brands for a product type");
+        log(groupBrandsByProductTypeMap);
+        log("Final map result of unique brands for a product type END");
 
         return groupBrandsByProductTypeMap;
     }
@@ -193,9 +195,9 @@ function App() {
                 productStocks.push(productStock);
             }
         }
-        console.log("Map of first products of each product type");
-        console.log(groupProductsByProductTypeMap);
-        console.log("Map of first products of each product type END");
+        log("Map of first products of each product type");
+        log(groupProductsByProductTypeMap);
+        log("Map of first products of each product type END");
 
         return groupProductsByProductTypeMap;
     }
@@ -231,11 +233,50 @@ function App() {
         });
     };
 
+    const handleBrandClick = (brandId, event, productTypeId) => {
 
-    const checkboxRefs = useRef([]);
+        // If a different brand has been selected within a different product type, clear brands filter and set the new
+        // setSelectedProductTypeId
+        if (productTypeId !== selectedProductTypeId || brandId === null) {
+            resetSelectedBrands();
+            setSelectedProductTypeId(productTypeId);
+        }
+
+        // if the checkbox has been checked, add it to the brand filter
+        if (event.target.checked === true) {
+            selectedBrandsFilter.set(brandId, brandId);
+        } else {
+            selectedBrandsFilter.delete(brandId);
+        }
+        setSelectedBrandsFilter(new Map(selectedBrandsFilter));
+
+    };
+
+    /**
+     * handleOnCategoryClick
+     * @param categoryId
+     */
+    const handleOnCategoryClick = (categoryId) => {
+        setSelectedCategoryId(categoryId);
+        setSelectedProductTypeId(null); // reset the previous ProductTypeId
+        resetSelectedBrands();
+    }
+
+    /**
+     * clear the brands filter
+     */
+    function resetSelectedBrands() {
+        handleResetAll();
+        selectedBrandsFilter.clear();
+        setSelectedBrandsFilter(selectedBrandsFilter);
+    }
+
+    /**
+     * Reset all the checkboxes on screen
+     */
     const handleResetAll = () => {
-        console.log("checkboxRefs.length");
-        console.log(checkboxRefs.current.length)
+        log("checkboxRefs.length");
+        log(checkboxRefs.current.length)
         checkboxRefs.current.forEach((checkbox) => {
             if(checkbox !== null) {
                 checkbox.checked = false;
@@ -243,51 +284,14 @@ function App() {
         });
     }
 
-    const handleBrandClick = (brandId, event, productTypeId) => {
-        // This will stop the event from bubbling up to parent elements
-        // this is because the parent <li> has a child of brand <li> and clicking the
-        // child will call the parent onclick. to prevent the parent from being called,
-        // we stopPropagation
-        event.stopPropagation();
-        console.log("handleBrandClick");
-        console.log("selectedProductTypeId "+ selectedProductTypeId);
-        console.log("productTypeId "+ productTypeId);
-
-        if (productTypeId !== selectedProductTypeId) {
-            console.log("NEW productType");
-            //event.target.checked = false
-            handleResetAll();
-            selectedBrandsFilter.clear();
-            setSelectedBrandsFilter(selectedBrandsFilter);
-            console.log(selectedBrandsFilter);
-            setSelectedProductTypeId(productTypeId);
-        }
-
-
-        if (brandId === null) {
-            console.log("handleBrandClick CLEAR1!!!!!!");
-            setSelectedBrandsFilter(new Map());
-            return;
-        }
-
-        if (event.target.checked === true) {
-            selectedBrandsFilter.set(brandId, brandId);
-        } else {
-            selectedBrandsFilter.delete(brandId);
-        }
-        console.log(selectedBrandsFilter);
-        setSelectedBrandsFilter(new Map(selectedBrandsFilter));
-        console.log("handleBrandClick end!");
-
-    };
-
-    const handleOnCategoryClick = (categoryId) => {
-        setSelectedCategoryId(categoryId);
-        setSelectedProductTypeId(null); // reset the previous ProductTypeId
-        handleResetAll();
-        selectedBrandsFilter.clear();
-        setSelectedBrandsFilter(selectedBrandsFilter);
+    function log(msg) {
+        //console.log(msg);
     }
+
+    // Function to capitalize the first letter and make the rest lowercase
+    const capitalizeFirstLetter = (text) => {
+        return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    };
 
     return (
         <>
@@ -301,13 +305,11 @@ function App() {
                         setSelectedProductTypeId={setSelectedProductTypeId}
                         handleBrandClick={handleBrandClick}
                         checkboxRefs={checkboxRefs}
+                        capitalizeFirstLetter={capitalizeFirstLetter}
                     />
                     <div className="main-content-container">
                         <CategoryTopMenu
                             categories={categories}
-                            selectedCategoryId={selectedCategoryId}
-                            setSelectedCategoryId={setSelectedCategoryId}
-                            setSelectedProductTypeId={setSelectedProductTypeId}
                             handleOnCategoryClick={handleOnCategoryClick}
                         />
                         <MainContent

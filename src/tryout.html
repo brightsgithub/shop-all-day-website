@@ -1,17 +1,51 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Centered Box</title>
     <style>
 
-        .container {
-            margin-top: 150px;
+        body, html {
+            margin: 0;
+            height: 100%;
+            width: 100%; /* Ensure the body takes the full width of the viewport */
             display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(246, 194, 81);
         }
 
+        .centered-box {
+            background-color: rgb(255, 255, 255);
+            width: 80%;
+            height: 80%;
+            border-radius: 8px; /* Optional: rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+            /*text-align: center;*/
+            display: flex;
+            /*justify-content: center;*/
+            /*align-items: center;*/
+        }
+
+        .root {
+            background-color: rgb(255, 255, 255);
+            width: 80%;
+            height: 80%;
+            border-radius: 8px; /* Optional: rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+            /*text-align: center;*/
+            display: flex;
+            /*justify-content: center;*/
+            /*align-items: center;*/
+        }
+
+        /* Additional styles (if necessary) */
         .container_child_2 {
-            /*border: 1px solid black;*/
             display: flex;
             flex-grow: 1;
+            height: 200px;
+            align-self: center;
         }
 
         .main-content {
@@ -23,7 +57,6 @@
         .main-content-container {
             background-color: rgba(0, 0, 0, 0.5);
             flex-grow: 1;
-            /*border: 2px solid black;*/
         }
 
         .left-menu {
@@ -33,7 +66,6 @@
         .row-image {
             width: 200px;
             height: 200px;
-            /*border: 1px solid black;*/
             margin-right: 10px; /* Add some margin between image and text */
         }
 
@@ -46,7 +78,6 @@
         /* menu base styles */
         nav {
             background: #333;
-
         }
 
         nav ul {
@@ -72,54 +103,12 @@
     </style>
 </head>
 <body>
-
-<div class="container">
+<div class="root">
+<div class="centered-boxx">
     <div class="container_child_2">
-        <div class="left-menu">
-            <ul>
-                <li>Product Type 1</li>
-                <li>Product Type 2</li>
-                <li>Product Type 3</li>
-                <li>Product Type 4</li>
-                <li>Product Type 5 sfsdfsd fsfsdfsdfsdfds</li>
-            </ul>
-        </div>
-        <div class="main-content-container">
-            <nav>
-                <ul>
-                    <li>Category 1</li>
-                    <li>Category 2</li>
-                    <li>Category 3</li>
-                    <li>Category 4</li>
-                    <li>Category 5</li>
-                </ul>
-            </nav>
-            <div class="main-content">
-                <div class="paragraph">
-                    <img class="row-image" src="assets/no_img_pic.png" alt="product image"/>
-                    <p>This is a hidden paragraph2 </p>
-                </div>
-                <div class="paragraph">
-                    <img class="row-image" src="assets/no_img_pic.png" alt="product image"/>
-                    <p>This is a hidden paragraph2 </p>
-                </div>
-                <div class="paragraph">
-                    <img class="row-image" src="assets/no_img_pic.png" alt="product image"/>
-                    <p>This is a hidden paragraph2 </p>
-                </div>
-                <div class="paragraph">
-                    <img class="row-image" src="assets/no_img_pic.png" alt="product image"/>
-                    <p>This is a hidden paragraph2 </p>
-                </div>
-                <div class="paragraph">
-                    <img class="row-image" src="assets/no_img_pic.png" alt="product image"/>
-                    <p>This is a hidden paragraph2 </p>
-                </div>
-            </div>
-        </div>
+    This is a centered and elevated box.
     </div>
 </div>
-
-
+</div>
 </body>
 </html>

@@ -1,39 +1,119 @@
 
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-Bold.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-Italic.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-BoldItalic.otf') format('opentype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-Light.otf') format('opentype');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('../fonts/Quicksand-LightItalic.otf') format('opentype');
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Quicksand-Dash';
+  src: url('../fonts/Quicksand_Dash.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body, html {
+  margin: 0;
+  height: 100%;
+  width: 100%; /* Ensure the body takes the full width of the viewport */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(246, 194, 81);
+  font-family: 'Quicksand', sans-serif;
+}
+
+
+.root {
+  background-color: rgb(255, 255, 255);
+  width: 80%;
+  height: 80%;
+  border-radius: 16px; /* Optional: rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+  /*text-align: center;*/
+  display: flex;
+  /*justify-content: center;*/
+  /*align-items: center;*/
+}
 
 .container {
-  margin-top: 150px;
   display: flex;
+  border-radius: 8px; /* Optional: rounded corners */
+  width: 100%; /* Ensure the body takes the full width of the viewport */
 }
+
 
 .container_child_2 {
   /*border: 1px solid black;*/
   display: flex;
   flex-grow: 1;
+
 }
 
 .main-content {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(63, 63, 63);
   flex-grow: 1;
   border: 1px solid black;
+
 }
 
 .main-content p{
   color: #fff;
 }
 
-.left-menu-titles{
-  cursor: pointer;
-}
-
 .main-content-container {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgb(255,255,255);
   flex-grow: 1;
-  /*border: 2px solid black;*/
+
+  background-image: url('./assets/background.jpg');
+  background-size: cover; /* Ensures the image covers the entire background */
+  background-position: center; /* Centers the background image */
+  background-repeat: no-repeat; /* Prevents the background image from repeating */
+  background-attachment: fixed; /* Keeps the background image fixed during scrolling */
+
 }
 
 .left-menu {
   min-width: 200px;
-  background-color: rgb(26, 106, 99);
+  background-color: rgb(83,181,176);
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .left-menu ul {
@@ -42,15 +122,35 @@
 }
 
 .left-menu-titles{
+  cursor: pointer;
   text-decoration: none;
   color: #fff;
   padding: 10px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.left-menu-titles_li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.left-menu-titles_li li{
+  //margin-bottom: 36px; /* Adjust this value to add more or less spacing */
+}
+
+.left-menu-titles_li li:last-child {
+  margin-bottom: 30px; /* Remove the margin from the last item */
 }
 
 .submenu-brand-name{
   text-decoration: none;
   color: #333333;
-  padding: 10px;
+  padding-left: 20px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: large;
 }
 
 .row-image {
@@ -60,16 +160,17 @@
   margin-right: 10px; /* Add some margin between image and text */
 }
 
-.paragraph {
+.main-content-titles {
   display: flex;
   align-items: center; /* Vertically center content */
   margin-right: 10px; /* Add some margin between image and text */
+  font-size: larger;
 }
 
 /* menu base styles */
 nav {
   background: #333;
-
+  border-top-right-radius: 8px;
 }
 
 nav ul {
@@ -91,4 +192,28 @@ nav li {
 
 nav li:hover {
   background-color: #555;
+}
+
+.top-menu-titles {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.quarter-circle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200px; /* Adjust width and height as needed */
+  height: 200px;
+  overflow: hidden; /* Ensure any overflow is hidden */
+}
+
+.quarter-circle {
+  width: 200px; /* Same as container width */
+  height: 200px; /* Same as container height */
+  background-color: rgb(246, 194, 81); /* Adjust color as needed */
+  border-radius: 0 0 0 100%; /* This creates a quarter circle */
+  position: absolute;
+  top: 0;
+  left: 0;
 }
