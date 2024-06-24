@@ -4,6 +4,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
 import Navigation from './Navigation';
 import ShopWebsite from "./ShopWebsite.jsx";
+import Erd from "./Erd.jsx";
 
 function App() {
     return (
@@ -11,7 +12,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<Navigation />} />
                 <Route path="/ShopWebsite" element={<ShopWebsite />} />
-                {/*<Route path="/screen2" element={<Screen2 />} />*/}
+                <Route path="/Erd" element={<Erd />} />
                 {/*<Route path="/screen3" element={<Screen3 />} />*/}
             </Routes>
         </Router>
