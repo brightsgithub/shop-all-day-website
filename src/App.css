@@ -277,7 +277,7 @@ nav li:hover {
 .link-with-desc {
   /*display: flex;*/
   /*flex-direction: row;*/
-  margin-top: 60px;
+  margin-bottom: 60px;
 }
 
 .link-long-desc {
@@ -313,6 +313,7 @@ nav li:hover {
 .aws-container {
   padding: 16px;
   margin-top: 30px;
+  margin-bottom: 60px;
   height: 600px;
   width: 1200px;
   background-color: #FF9900;
@@ -426,7 +427,7 @@ nav li:hover {
   align-self: center;
   width: 100%; /* Ensure the container takes up the full width available */
   height: 100%; /* Set a fixed height or use another measurement like viewport height (vh) */
-  overflow: hidden; /* Hide any overflow to prevent scrollbars */
+  /*overflow: hidden; !* Hide any overflow to prevent scrollbars *!*/
   position: relative; /* Ensure proper positioning of the image */
 }
 
@@ -434,9 +435,9 @@ nav li:hover {
   width: 100%; /* Make the image fill the width of its container */
   height: auto; /* Automatically adjust height to maintain aspect ratio */
   align-self: center;
-  position: absolute; /* Position the image absolutely within its container */
-  top: 0; /* Align to the top of the container */
-  left: 0; /* Align to the left of the container */
+  /*position: absolute; !* Position the image absolutely within its container *!*/
+  /*top: 0; !* Align to the top of the container *!*/
+  /*left: 0; !* Align to the left of the container *!*/
 }
 
 
