@@ -2,13 +2,16 @@
 import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import pngImage from "./assets/spring_boot_logo.png";
+import {serverUrl} from './appConstants.js'
 
 function Navigation() {
 
     const navigate = useNavigate()
     const goToSwagger = () => {
         // navigate('http://localhost:8080/swagger-ui/index.html');
-        window.location.href = 'http://localhost:8080/swagger-ui/index.html';
+        //window.location.href = 'http://localhost:8080/swagger-ui/index.html';
+        window.location.href = serverUrl+'/swagger-ui/index.html';
+        // const response = await fetch(serverUrl+'/storage/v1/category');
     };
 
     const goToWebsite = () => {

@@ -1,0 +1,30 @@
+Deployment help
+
+The below command will build and deploy the image loaclly
+docker-compose up --build -d
+
+Deploy on EC2
+1. we use the below to build an amd64 image
+    docker buildx build --platform linux/amd64 -t store-website:latest -f Dockerfile --load .
+
+2. save the image
+    docker save -o store_website_amd64.tar store-website:latest
+
+3. copy the image to the ec2 instance
+    scp -i shopallday-storage-aws.pem -r SHOP_ALL_DAY_PROJECT/store-website/store_website_amd64.tar ec2-user@13.40.6.197:/data/website
+
+4. Load the docker image
+    First: sudo docker-compose down
+    List all images: sudo docker images
+    Remove old images: sudo docker rmi  <image_id_or_name> <image_id_or_name>
+
+    Then load
+    sudo docker load -i store_website_amd64.tar
+
+5. Edit the docker-compose.yml file
+
+
+5. Start the Docker container
+    sudo docker-compose up -d
+
+
