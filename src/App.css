@@ -102,13 +102,15 @@ body, html {
   background-color: rgb(255,255,255);
   flex-grow: 1;
 
-  background-image: url('./assets/background.jpg');
+  /*background-image: url('./assets/background.jpg');*/
+  background-color: rgba(113, 113, 113);
   background-size: cover; /* Ensures the image covers the entire background */
   background-position: center; /* Centers the background image */
   background-repeat: no-repeat; /* Prevents the background image from repeating */
   background-attachment: fixed; /* Keeps the background image fixed during scrolling */
-
 }
+
+
 
 .left-menu {
   min-width: 200px;
@@ -154,6 +156,15 @@ body, html {
   font-size: large;
 }
 
+.submenu-brand-name:hover{
+  background-color: #555; /* Change background color on hover */
+  color: white; /* Change text color on hover */
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.brand-checkbox {
+  cursor: pointer;
+}
 .row-image {
   width: 200px;
   height: 200px;
@@ -166,6 +177,16 @@ body, html {
   align-items: center; /* Vertically center content */
   margin-right: 10px; /* Add some margin between image and text */
   font-size: larger;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.main-content-titles:hover{
+  background-color: #555;
+}
+
+.main-content-titles_price{
+  font-weight: bold;
 }
 
 /* menu base styles */
@@ -189,6 +210,7 @@ nav li {
   display: block;
   padding: 10px;
   cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
 }
 
 nav li:hover {
@@ -439,5 +461,160 @@ nav li:hover {
   /*top: 0; !* Align to the top of the container *!*/
   /*left: 0; !* Align to the left of the container *!*/
 }
+
+.details-screen-container {
+  background-color: rgba(63, 63, 63);
+  display: flex; /* stack children from left to right*/
+  position: relative; /* Positioning context for the line */
+}
+
+.details-screen-container-left-side {
+  flex-grow: 1;
+  margin-left: 16px;
+  margin-right: 16px;
+  margin-bottom: 16px;
+}
+
+.details-screen-container-right-side {
+  flex-grow: 1;
+  margin-left: 16px;
+  margin-right: 16px;
+}
+
+
+.details-screen-vertical-line-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px; /* Adjust spacing around the line */
+}
+
+.details-screen-vertical-line {
+  width: 3px;
+  height: 70%;
+  background-color: #fff; /* Black color for the line */
+}
+
+.details-image {
+  width: 400px;
+  height: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+}
+
+.image-with-desc-container {
+  display: flex;
+  margin-top: 16px;
+}
+
+.details-long-title {
+  color: white;
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.details-long-desc {
+  color: white;
+  font-size: large;
+}
+
+.details-screen-desc-container {
+  margin-left: 16px;
+}
+
+.details-price-container {
+  margin-top: 60px;
+}
+.details-price-container span {
+  color: white;
+}
+
+.details-price-title {
+  font-size: x-large;
+}
+
+.details-price-value {
+  font-weight: bold;
+  font-size: x-large;
+}
+
+.details-screen-quantity-title {
+  font-size: large;
+  color: white;
+}
+
+.details-screen-title-and-select-container-quantity {
+  margin-top: 16px;
+}
+.details-screen-title-and-select-container {
+  margin-top: 30px;
+}
+
+.details-screen-select-title {
+  font-size: large;
+  color: white;
+}
+
+.details-screen-select {
+  width: 300px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+}
+
+.checkout-button-container {
+  margin-top: 30px; /* Adjust margin as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-button {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  font-size: x-large;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+}
+
+.checkout-button:hover {
+  background-color: #218838; /* Darker green on hover */
+}
+
+.checkout-button:active {
+  background-color: #1e7e34; /* Even darker green on click */
+}
+
+.back-button-container {
+  margin-top: 20px; /* Adjust margin as needed */
+  display: flex;
+
+}
+
+.back-button {
+  background-color: #007bff; /* Blue background */
+  color: white; /* White text */
+  font-size: large;
+  font-weight: bold;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+}
+
+.back-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.back-button:active {
+  background-color: #004085; /* Even darker blue on click */
+}
+
+
+
 
 

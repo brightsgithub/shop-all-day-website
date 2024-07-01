@@ -35,8 +35,8 @@ function LeftMenu({
                                         <ul>
                                             {brands.map((brand) => (
                                                 <li className="submenu-brand-name" key={brand.brandId}>
-                                                    <span>{capitalizeFirstLetter(brand.brandName)}</span>
-                                                    <input type="checkbox"
+                                                    <span onClick={(event) => handleBrandClick(brand.brandId, event, productTypeId)}>{capitalizeFirstLetter(brand.brandName)}</span>
+                                                    <input className={`brand-checkbox`} type="checkbox"
                                                            id={brand.brandId}
                                                            onClick={(event) => handleBrandClick(brand.brandId, event, productTypeId)}
                                                            name={brand.brandId}

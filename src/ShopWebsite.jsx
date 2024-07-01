@@ -6,6 +6,7 @@ import productStockService from './services/productStockService.js';
 import LeftMenu from "./LeftMenu.jsx";
 import CategoryTopMenu from "./CategoryTopMenu.jsx";
 import MainContent from "./MainContent.jsx";
+import DetailsScreen from "./DetailsScreen.jsx";
 
 
 function ShopWebsite() {
@@ -28,7 +29,7 @@ function ShopWebsite() {
 
     const [categoryError, setCategoryError] = useState(null);
     const [productStockError, setProductStockError] = useState(null);
-
+    const [selectedProduct, setSelectedProduct] = useState(null);  // State for the selected product
     const checkboxRefs = useRef([]); // keep a reference on all checkBoxes
 
 
@@ -234,7 +235,7 @@ function ShopWebsite() {
     };
 
     const handleBrandClick = (brandId, event, productTypeId) => {
-
+        goBack();
         // If a different brand has been selected within a different product type, clear brands filter and set the new
         // setSelectedProductTypeId
         if (productTypeId !== selectedProductTypeId || brandId === null) {
@@ -242,13 +243,27 @@ function ShopWebsite() {
             setSelectedProductTypeId(productTypeId);
         }
 
+        // checkboxRefs.current.forEach((checkbox) => {
+        //     if(checkbox != null && checkbox.id == brandId && !checkbox.checked) {
+        //         console.log("checkbox.id "+checkbox.id);console.log();
+        //         console.log("BRAND ID "+brandId);
+        //         console.log("YESSSSSSSS");
+        //         checkbox.checked = true;
+        //     } else if(checkbox!=null) {
+        //
+        //     }
+        // });
+
+
         // if the checkbox has been checked, add it to the brand filter
         if (event.target.checked === true) {
+            // event.target.checked = true;
             selectedBrandsFilter.set(brandId, brandId);
         } else {
             selectedBrandsFilter.delete(brandId);
         }
         setSelectedBrandsFilter(new Map(selectedBrandsFilter));
+
 
     };
 
@@ -257,6 +272,7 @@ function ShopWebsite() {
      * @param categoryId
      */
     const handleOnCategoryClick = (categoryId) => {
+        goBack();
         setSelectedCategoryId(categoryId);
         setSelectedProductTypeId(null); // reset the previous ProductTypeId
         resetSelectedBrands();
@@ -266,6 +282,7 @@ function ShopWebsite() {
      * clear the brands filter
      */
     function resetSelectedBrands() {
+        goBack();
         handleResetAll();
         selectedBrandsFilter.clear();
         setSelectedBrandsFilter(selectedBrandsFilter);
@@ -275,6 +292,7 @@ function ShopWebsite() {
      * Reset all the checkboxes on screen
      */
     const handleResetAll = () => {
+        goBack();
         log("checkboxRefs.length");
         log(checkboxRefs.current.length)
         checkboxRefs.current.forEach((checkbox) => {
@@ -291,6 +309,14 @@ function ShopWebsite() {
     // Function to capitalize the first letter and make the rest lowercase
     const capitalizeFirstLetter = (text) => {
         return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
+    };
+
+    const handleProductClick = (product) => {
+        setSelectedProduct(product);  // Set the selected product
+    };
+
+    const goBack = () => {
+        setSelectedProduct(null);  // Clear the selected product
     };
 
     return (
@@ -312,9 +338,14 @@ function ShopWebsite() {
                             categories={categories}
                             handleOnCategoryClick={handleOnCategoryClick}
                         />
-                        <MainContent
-                            productStocksForMainDisplay={filteredProductStocksForMainDisplay}
-                        />
+                        {selectedProduct ? (
+                            <DetailsScreen product={selectedProduct} goBack={goBack} />
+                        ) : (
+                            <MainContent
+                                productStocksForMainDisplay={filteredProductStocksForMainDisplay}
+                                onProductClick={handleProductClick}  // Pass the click handler
+                            />
+                        )}
                     </div>
                 </div>
             </div>

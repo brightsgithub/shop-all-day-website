@@ -1,6 +1,8 @@
 Deployment help
 
-The below command will build and deploy the image loaclly
+Run the app locally: npm run dev
+
+The below command will build and deploy the image locally
 docker-compose up --build -d
 
 Deploy on EC2
