@@ -1,8 +1,10 @@
 // DetailsScreen.jsx
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import pngImage from './assets/no_img_pic.png';
 
-function DetailsScreen({product, goBack}) {
+function DetailsScreen({productDto, productStocksForAProductMap, goBack}) {
+
+    const productStocks = productStocksForAProductMap.get(productDto.productId)
 
     useEffect(() => {
         const handlePopState = () => {
@@ -25,8 +27,8 @@ function DetailsScreen({product, goBack}) {
                 <div className="image-with-desc-container">
                     <img className={`details-image`} src={pngImage}/>
                     <div className={`details-screen-desc-container`}>
-                        <span className="details-long-title">{product.productDto.longTitle}</span><br/><br/>
-                        <span className="details-long-desc">{product.productDto.longDescription}</span>
+                        <span className="details-long-title">{productDto.longTitle}</span><br/><br/>
+                        <span className="details-long-desc">{productDto.longDescription}</span>
                     </div>
                 </div>
 
@@ -42,45 +44,29 @@ function DetailsScreen({product, goBack}) {
 
             <div className={`details-screen-container-right-side`}>
 
-                <div className={`details-screen-title-and-select-container-quantity`}>
-                    <span className={`details-screen-select-title`}>Quantity</span>
+                <div className={`details-screen-title-and-select-container-sizes`}>
+                    <span className={`details-screen-select-title`}>Sizes</span>
                     <select className={`details-screen-select`}>
-                        <option key={`1`}>Value 1</option>
-                        <option key={`2`}>Value 2</option>
-                        <option key={`3`}>Value 3</option>
-                        <option key={`4`}>Value 4</option>
-                        <option key={`5`}>Value 5</option>
-                        <option key={`6`}>Value 6</option>
+                        {productStocks.map(productStock => (
+                            <option id={productStock.productStockId} key={productStock.productStockId}
+                                    value={productStock.size}>{productStock.size}</option>
+                        ))}
                     </select>
                 </div>
 
                 <div className={`details-screen-title-and-select-container`}>
-                    <span className={`details-screen-select-title`}>Available sizes</span>
+                    <span className={`details-screen-select-title`}>Colours</span>
                     <select className={`details-screen-select`}>
-                        <option key={`1`}>Value 1</option>
-                        <option key={`2`}>Value 2</option>
-                        <option key={`3`}>Value 3</option>
-                        <option key={`4`}>Value 4</option>
-                        <option key={`5`}>Value 5</option>
-                        <option key={`6`}>Value 6</option>
-                    </select>
-                </div>
-
-                <div className={`details-screen-title-and-select-container`}>
-                    <span className={`details-screen-select-title`}>Available colours</span>
-                    <select className={`details-screen-select`}>
-                        <option key={`1`}>Value 1</option>
-                        <option key={`2`}>Value 2</option>
-                        <option key={`3`}>Value 3</option>
-                        <option key={`4`}>Value 4</option>
-                        <option key={`5`}>Value 5</option>
-                        <option key={`6`}>Value 6</option>
+                        {productStocks.map(productStock => (
+                            <option id={productStock.productStockId} key={productStock.productStockId}
+                                    value={productStock.color}>{productStock.color}</option>
+                        ))}
                     </select>
                 </div>
 
                 <div className={`details-price-container`}>
-                    <span className={`details-price-title`}>Price</span><br/>
-                    <span className={`details-price-value`}>£599.00</span>
+                    <span className={`details-price-title`}>Price</span>&nbsp;
+                    <span className={`details-price-value`}>£{productStocks[0].price}</span>
                 </div>
 
                 <div className="checkout-button-container">

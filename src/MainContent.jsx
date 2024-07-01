@@ -12,7 +12,7 @@ function MainContent({productStocksForMainDisplay, onProductClick}) {
                     <div
                         className="main-content-titles"
                         key={productStockDto.productDto.productId}
-                        onClick={() => onProductClick(productStockDto)}
+                        onClick={() => onProductClick(productStockDto.productDto)}
                     >
                         <img className="row-image" src={pngImage} alt="product image 1"/>
                         <p>{productStockDto.productDto.shortTitle}:&nbsp;</p><p className="main-content-titles_price">£{productStockDto.price}</p>

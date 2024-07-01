@@ -30,7 +30,12 @@ function ShopWebsite() {
     const [categoryError, setCategoryError] = useState(null);
     const [productStockError, setProductStockError] = useState(null);
     const [selectedProduct, setSelectedProduct] = useState(null);  // State for the selected product
+    const [selectedProductStock, setSelectedProductStock] = useState(null);  // State for the selected product
     const checkboxRefs = useRef([]); // keep a reference on all checkBoxes
+
+    // A map containing all the product stock info for a product. This is so we can show all product stock info for a given product
+    const [productStocksForAProductMap, setProductStocksForAProductMap] = useState(new Map());
+
 
 
     // useEffect() hooks tells react to run some code under certain conditions
@@ -68,6 +73,7 @@ function ShopWebsite() {
 
             try {
                 const data = await productStockService.getProductStocksByCategory(categoryId);
+                setProductStocksForAProductMap(groupProductStocksByProductId(data));
 
                 const groupProductsByProductTypeMap = groupProductsByProductType(data);
 
@@ -102,6 +108,29 @@ function ShopWebsite() {
         fetchProductStocks(selectedCategoryId);
     },[selectedCategoryId, selectedProductTypeId, selectedBrandsFilter]); // when the state variable selectedCategoryId changes, call fetchProductStocks(id)
 
+    /**
+     * Group productStocks by productId. This allows us to look up all product stocks for a product when viewing the details page.
+     * @param {Array} productStocks - Array of product stock objects.
+     * @returns {Map} - A map where the key is productId and the value is an array of product stocks for that product.
+     */
+    function groupProductStocksByProductId(productStocks) {
+        const productStocksForAProductMap = new Map();
+
+        productStocks.forEach((productStock) => {
+            const productId = productStock.productDto.productId;
+
+            // When the product id returns no results, create an empty list to be populated
+            if (!productStocksForAProductMap.has(productId)) {
+                productStocksForAProductMap.set(productId, []);
+            }
+
+            // get the list by product id and populate it
+            productStocksForAProductMap.get(productId).push(productStock);
+        });
+
+        log(productStocksForAProductMap);
+        return productStocksForAProductMap;
+    }
 
 
     function populateFilteredProductStocks(productStocksForMainDisplay, userSelectedBrandsFilter) {
@@ -311,8 +340,14 @@ function ShopWebsite() {
         return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase();
     };
 
-    const handleProductClick = (product) => {
-        setSelectedProduct(product);  // Set the selected product
+    const handleProductClick = (productDto) => {
+        // console.log("Product Clicked start");
+        // console.log(productDto);
+        // console.log("Product Clicked end");
+        // console.log("productStocksForAProductMap start");
+        // console.log(productStocksForAProductMap);
+        // console.log("productStocksForAProductMap end");
+        setSelectedProduct(productDto);  // Set the selected product
     };
 
     const goBack = () => {
@@ -339,7 +374,10 @@ function ShopWebsite() {
                             handleOnCategoryClick={handleOnCategoryClick}
                         />
                         {selectedProduct ? (
-                            <DetailsScreen product={selectedProduct} goBack={goBack} />
+                            <DetailsScreen
+                                productDto={selectedProduct}
+                                productStocksForAProductMap={productStocksForAProductMap}
+                                goBack={goBack} />
                         ) : (
                             <MainContent
                                 productStocksForMainDisplay={filteredProductStocksForMainDisplay}

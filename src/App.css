@@ -522,7 +522,10 @@ nav li:hover {
 }
 
 .details-price-container {
+  display: flex;
   margin-top: 60px;
+  justify-content: center;
+  align-items: center;
 }
 .details-price-container span {
   color: white;
@@ -542,7 +545,7 @@ nav li:hover {
   color: white;
 }
 
-.details-screen-title-and-select-container-quantity {
+.details-screen-title-and-select-container-sizes {
   margin-top: 16px;
 }
 .details-screen-title-and-select-container {
@@ -569,7 +572,7 @@ nav li:hover {
 .checkout-button {
   background-color: #28a745; /* Green background */
   color: white; /* White text */
-  font-size: x-large;
+  font-size: large;
   font-weight: bold;
   padding: 10px 20px;
   border: none;
