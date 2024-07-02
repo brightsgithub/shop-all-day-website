@@ -8,7 +8,8 @@ function LeftMenu({
                       error,
                       handleBrandClick,
                       checkboxRefs,
-                      capitalizeFirstLetter
+                      capitalizeFirstLetter,
+                      selectedProductTypeId
                   }) {
     var brandsCount = 0;
     return (
@@ -20,8 +21,13 @@ function LeftMenu({
                         const productTypeName = productStock.productDto.productTypeDto.productTypeName;
                         const brands = brandsByProductTypeMap.get(productTypeId) || []; // Retrieve brands for the current product type
 
+                        if (selectedProductTypeId === null) {
+                            selectedProductTypeId = productTypeId
+                        }
+                        var isSelected = (selectedProductTypeId === productTypeId);
+
                         return (
-                            <li className="left-menu-titles_li"
+                            <li className={`left-menu-titles_li ${isSelected ? 'selected' : ''}`}
                                 key={productTypeId}>
                             <span className="left-menu-titles"
                                 onClick={(event) => {

@@ -139,6 +139,15 @@ body, html {
   margin: 0;
 }
 
+.left-menu-titles_li.selected {
+  background-color: rgb(66, 144, 140);
+}
+
+.left-menu-titles_li:hover {
+  background-color: rgb(66, 144, 140);
+  transition: background-color 0.3s ease; /* Smooth transition */
+}
+
 .left-menu-titles_li li{
   //margin-bottom: 36px; /* Adjust this value to add more or less spacing */
 }
@@ -157,13 +166,16 @@ body, html {
 }
 
 .submenu-brand-name:hover{
-  background-color: #555; /* Change background color on hover */
+  /*background-color: #555; !* Change background color on hover *!*/
+  background-color: rgb(53, 115, 112); /* Change background color on hover */
   color: white; /* Change text color on hover */
   transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .brand-checkbox {
   cursor: pointer;
+  /*width: 15px;*/
+  /*height: 15px;*/
 }
 .row-image {
   width: 200px;
@@ -220,6 +232,10 @@ nav li:hover {
 .top-menu-titles {
   font-weight: bold;
   font-size: x-large;
+}
+
+.top-menu-titles.selected {
+  background-color: #555; /* Same color as the hover state */
 }
 
 .quarter-circle-container {

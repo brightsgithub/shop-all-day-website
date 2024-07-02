@@ -367,11 +367,13 @@ function ShopWebsite() {
                         handleBrandClick={handleBrandClick}
                         checkboxRefs={checkboxRefs}
                         capitalizeFirstLetter={capitalizeFirstLetter}
+                        selectedProductTypeId={selectedProductTypeId}
                     />
                     <div className="main-content-container">
                         <CategoryTopMenu
                             categories={categories}
                             handleOnCategoryClick={handleOnCategoryClick}
+                            selectedCategoryId={selectedCategoryId}
                         />
                         {selectedProduct ? (
                             <DetailsScreen
