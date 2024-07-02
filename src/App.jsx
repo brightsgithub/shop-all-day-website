@@ -1,7 +1,7 @@
 import './App.css'
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import Navigation from './components/Navigation.jsx';
+import HomeScreen from './components/HomeScreen.jsx';
 import ShopWebsite from "./components/ShopWebsite.jsx";
 import Erd from "./components/Erd.jsx";
 
@@ -9,7 +9,7 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Navigation />} />
+                <Route path="/" element={<HomeScreen />} />
                 <Route path="/ShopWebsite" element={<ShopWebsite />} />
                 <Route path="/Erd" element={<Erd />} />
                 {/*<Route path="/screen3" element={<Screen3 />} />*/}

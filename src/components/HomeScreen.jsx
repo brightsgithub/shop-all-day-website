@@ -1,11 +1,11 @@
-// Navigation.jsx
+// HomeScreen.jsx
 import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
 import pngImage from "../assets/spring_boot_logo.png";
 import gitHubImage from "../assets/git_hub_logo.png";
 import {serverUrl} from '../appConstants.js'
 
-function Navigation() {
+function HomeScreen() {
 
     const navigate = useNavigate()
     const goToSwagger = () => {
@@ -133,4 +133,4 @@ function Navigation() {
     );
 }
 
-export default Navigation;
+export default HomeScreen;
