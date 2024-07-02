@@ -677,6 +677,21 @@ nav li:hover {
 padding: 5px;
 }
 
+.developed-by-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: rgb(83,181,176);
+}
+
+.developed-by-msg {
+  margin-bottom: 30px;
+  font-size: 17px;
+  font-style: italic;
+  color: black; /* Optional: text color */
+}
+
 
 
 

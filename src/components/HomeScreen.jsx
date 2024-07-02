@@ -129,6 +129,7 @@ function HomeScreen() {
                 </div>
 
             </div>
+            <div className={`developed-by-container`}><span className={`developed-by-msg`}>Developed by: Bright Owusu-Amankwaa</span></div>
         </div>
     );
 }
