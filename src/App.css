@@ -562,9 +562,12 @@ nav li:hover {
 }
 
 .details-screen-title-and-select-container-sizes {
+  display: grid;
   margin-top: 16px;
 }
+
 .details-screen-title-and-select-container {
+  display: grid;
   margin-top: 30px;
 }
 
@@ -632,6 +635,48 @@ nav li:hover {
 .back-button:active {
   background-color: #004085; /* Even darker blue on click */
 }
+
+.feature-not-complete-msg {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  margin-top: 20px;
+  font-size: 16px;
+  color: red;
+}
+
+.git-hub-image {
+  width: 30px;
+  height: 30px;
+}
+
+.todo{
+  margin-top: 30px;
+  padding: 16px;
+  margin-bottom: 30px;
+
+  /*background-color: rgb(231,233,235);*/
+  background: #333;
+  border-radius: 16px; /* Optional: rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.8); /* Elevation effect */
+}
+
+.todo-title {
+  color: white;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.todo-list {
+  color: white;
+  font-size: 25px;
+  margin-right: 80px;
+  font-weight: normal;
+}
+
+.todo-list li {
+padding: 5px;
+}
+
 
 
 

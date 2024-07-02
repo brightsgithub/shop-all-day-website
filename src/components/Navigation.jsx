@@ -1,8 +1,9 @@
 // Navigation.jsx
 import React, { useState } from 'react';
 import {Link, useNavigate} from 'react-router-dom';
-import pngImage from "./assets/spring_boot_logo.png";
-import {serverUrl} from './appConstants.js'
+import pngImage from "../assets/spring_boot_logo.png";
+import gitHubImage from "../assets/git_hub_logo.png";
+import {serverUrl} from '../appConstants.js'
 
 function Navigation() {
 
@@ -12,6 +13,14 @@ function Navigation() {
         //window.location.href = 'http://localhost:8080/swagger-ui/index.html';
         window.location.href = serverUrl+'/swagger-ui/index.html';
         // const response = await fetch(serverUrl+'/storage/v1/category');
+    };
+
+    const goToGitHubShopAllDayWebsite = () => {
+        window.location.href = 'https://github.com/brightsgithub/shop-all-day-website';
+    };
+
+    const goToGitHubShopAllDayWebService = () => {
+        window.location.href = 'https://github.com/brightsgithub/shop-all-day-storage';
     };
 
     const goToWebsite = () => {
@@ -53,15 +62,15 @@ function Navigation() {
                         <span className="ec2-title">EC2 Instance</span>
                         <div className="all-docker-containers">
 
-                            <div className="docker-container" onClick={goToSwagger} >
+                            <div className="docker-container" onClick={goToSwagger}>
                                 <span className="docker-title">Docker Container 1 - <u>Microservice</u> </span>
                                 <ul className="docker-list-items">
                                     <li>Spring Boot RESTful webservice</li>
                                     <li>PostgresSQL</li>
                                 </ul>
                                 <div className="docker-description-container">
-                                <span style={{ color: '#ffffff' }}><b><u>Description</u></b><br/></span>
-                                <span>The Spring Boot RESTful webservice is responsible for handling client requests,
+                                    <span style={{color: '#ffffff'}}><b><u>Description</u></b><br/></span>
+                                    <span>The Spring Boot RESTful webservice is responsible for handling client requests,
                                     applying any business rules to these requests and is responsible for
                                     retrieving & persisting information to a PostgresSQL database. </span>
                                 </div>
@@ -74,8 +83,8 @@ function Navigation() {
 
                                 </ul>
                                 <div className="docker-description-container">
-                                <span style={{ color: '#ffffff' }}><br/><br/><b><u>Description</u></b><br/></span>
-                                <span>The end user interacts with a React JS website, which acts as the client to our microservice</span>
+                                    <span style={{color: '#ffffff'}}><br/><br/><b><u>Description</u></b><br/></span>
+                                    <span>The end user interacts with a React JS website, which acts as the client to our microservice</span>
                                 </div>
                             </div>
                         </div>
@@ -84,15 +93,38 @@ function Navigation() {
 
 
                 <div className="link-with-desc">
-                    <div><Link to="/ShopWebsite"><span className="link-style">Shop All Day Website</span></Link></div>
-                    <div><span className="link-long-desc">Shows the Shop All Day website making actual use of the backend restful webservices</span>
+                    <div><Link onClick={goToGitHubShopAllDayWebsite}>
+                        <img className={`git-hub-image`} src={gitHubImage}/>
+                        <span className="link-style"> GitHub - Shop All Day website code</span></Link></div>
+                    <div><span className="link-long-desc">View the ReactJS website source code on GitHub.</span>
+                    </div>
+                </div>
+
+                <div className="link-with-desc">
+                    <div><Link onClick={goToGitHubShopAllDayWebService}>
+                        <img className={`git-hub-image`} src={gitHubImage}/>
+                        <span className="link-style"> GitHub - Shop All Day backend webservice code</span></Link></div>
+                    <div><span
+                        className="link-long-desc">View Spring Boot backend webservice source code on GitHub.</span>
                     </div>
                 </div>
 
                 <div className="link-with-desc">
                     <div><Link to="/Erd"><span className="link-style">Entity Relationship Diagram</span></Link>
                     </div>
-                    <div><span className="link-long-desc">Shows a diagram of the relationships between the tables within the schema</span>
+                    <div><span className="link-long-desc">Shows a diagram of the relationships between the tables within the schema.</span>
+                    </div>
+                </div>
+
+                <div className="todo">
+                    <div><span className="todo-title">Todo list:</span></div>
+                    <div>
+                        <ul className="todo-list">
+                            <li className="todo-list-item">Implement Add to Basket & Checkout functionality</li>
+                            <li className="todo-list-item">Make use of Order endpoints to allow user to view order info</li>
+                            <li className="todo-list-item">Make user of Customer endpoints to allow sign up</li>
+                            <li className="todo-list-item">Implement an admin console. This is to allow management of new products, manage orders etc.</li>
+                        </ul>
                     </div>
                 </div>
 

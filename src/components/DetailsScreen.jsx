@@ -1,22 +1,10 @@
 // DetailsScreen.jsx
 import React, {useEffect} from 'react';
-import pngImage from './assets/no_img_pic.png';
+import pngImage from '../assets/no_img_pic.png';
 
 function DetailsScreen({productDto, productStocksForAProductMap, goBack}) {
 
     const productStocks = productStocksForAProductMap.get(productDto.productId)
-
-    useEffect(() => {
-        const handlePopState = () => {
-            goBack();
-        };
-
-        window.addEventListener('popstate', handlePopState);
-
-        return () => {
-            window.removeEventListener('popstate', handlePopState);
-        };
-    }, [goBack]);
 
     return (
         <div className={`details-screen-container`}>

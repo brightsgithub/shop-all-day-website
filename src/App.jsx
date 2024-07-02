@@ -1,10 +1,9 @@
 import './App.css'
-import './Header.jsx'
 import React from 'react';
 import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
-import Navigation from './Navigation';
-import ShopWebsite from "./ShopWebsite.jsx";
-import Erd from "./Erd.jsx";
+import Navigation from './components/Navigation.jsx';
+import ShopWebsite from "./components/ShopWebsite.jsx";
+import Erd from "./components/Erd.jsx";
 
 function App() {
     return (

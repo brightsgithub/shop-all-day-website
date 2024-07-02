@@ -1,4 +1,4 @@
-import pngImage from './assets/no_img_pic.png';
+import pngImage from '../assets/no_img_pic.png';
 
 function MainContent({productStocksForMainDisplay, onProductClick}) {
 

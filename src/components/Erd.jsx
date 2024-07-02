@@ -1,4 +1,4 @@
-import pngImage from "./assets/erd_diagram_2.png";
+import pngImage from "../assets/erd_diagram_2.png";
 function Erd () {
     return (
         <div className="erd-image-container">

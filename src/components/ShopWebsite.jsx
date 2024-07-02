@@ -1,8 +1,7 @@
-import './App.css'
-import './Header.jsx'
+import '../App.css'
 import React, { useState, useEffect, useRef } from 'react';
-import categoryService from './services/categoryService.js';
-import productStockService from './services/productStockService.js';
+import categoryService from '../services/categoryService.js';
+import productStockService from '../services/productStockService.js';
 import LeftMenu from "./LeftMenu.jsx";
 import CategoryTopMenu from "./CategoryTopMenu.jsx";
 import MainContent from "./MainContent.jsx";
