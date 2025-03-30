@@ -13,7 +13,9 @@ Deploy on EC2
     docker save -o store_website_amd64.tar store-website:latest
 
 3. copy the image to the ec2 instance
-    scp -i shopallday-storage-aws.pem -r SHOP_ALL_DAY_PROJECT/store-website/store_website_amd64.tar ec2-user@13.40.6.197:/data/website
+    sudo scp -i shop-allday-aws.pem -r SHOP_ALL_DAY_PROJECT/store-website/docker-compose.yml ec2-user@18.171.241.197:/data/website
+    ---
+    sudo scp -i shop-allday-aws.pem -r SHOP_ALL_DAY_PROJECT/store-website/store_website_amd64.tar ec2-user@18.171.241.197:/data/website
 
 4. Load the docker image
     First: sudo docker-compose down
