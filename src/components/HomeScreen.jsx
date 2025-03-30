@@ -122,7 +122,7 @@ function HomeScreen() {
                         <ul className="todo-list">
                             <li className="todo-list-item">Implement Add to Basket & Checkout functionality</li>
                             <li className="todo-list-item">Make use of Order endpoints to allow user to view order info</li>
-                            <li className="todo-list-item">Make user of Customer endpoints to allow sign up</li>
+                            <li className="todo-list-item">Make use of Customer endpoints to allow sign up</li>
                             <li className="todo-list-item">Implement an admin console. This is to allow management of new products, manage orders etc.</li>
                         </ul>
                     </div>
